@@ -12,11 +12,33 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-PORT = 6557;                 // Set a port number at the top so it's easy to change in the future
+PORT = 6558;                 // Set a port number at the top so it's easy to change in the future
 
 app.get('/', function(req, res,next){    // This is the basic syntax for what is called a 'route'
     res.render('home');
 });
+
+
+app.get('/showings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+    res.render('showings');
+});
+
+app.get('/order', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+  res.render('order');
+});
+
+app.use(function(req,res){
+    res.type('text/plain');
+    res.status(404);
+    res.send('404 - Not Found');
+  });
+  
+  app.use(function(err, req, res, next){
+    console.error(err.stack);
+    res.type('plain/text');
+    res.status(500);
+    res.send('500 - Server Error');
+  });
 
 app.listen(PORT, function(){            // This is the basic syntax for what is called the 'listener' which receives incoming requests on the specified PORT.
     console.log('Express started on http://flip2.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.')
