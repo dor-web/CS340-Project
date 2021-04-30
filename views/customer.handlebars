@@ -1,0 +1,60 @@
+<h1>Current Customers</h1>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body>
+
+{{> navbar}}
+<div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Customer <b>Details</b></h2></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Address 2</th>
+                        <th>Email</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Marquette</td>
+                        <td>4575 Prospect Valley Road</td>
+                        <td>Apt 1</td>
+                        <td>f_qMarq89@hotmail.com</td>
+                    </tr>
+                    <tr>
+                        <td>McKenzie</td>
+                        <td>1294 Pickens Way</td>
+                        <td>NA</td>
+                        <td>VioletEMcKenzie@rhyta.com</td>
+                    </tr>
+                    <tr>
+                        <td>Turner</td>
+                        <td>4521 Riverside Drive
+</td>
+                        <td>Apt 3</td>
+                        <td>CharlesCTurner@jourrapide.com</td>
+                    </tr>      
+                </tbody>
+            </table>
+        </div>
+    </div>     
+</body>

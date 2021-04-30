@@ -1,4 +1,4 @@
-<h1>Customer's Order</h1>
+<h1>Current Orders</h1>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -11,16 +11,17 @@
 
 </head>
 <body>
+{{> navbar}}
 
-<nav class="navbar navbar-default">
+{{!-- <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/showings">Showings</a></li>
-      <li><a href="/order">Orders</a></li>
+      <li class="active"><a href="/order">Orders</a></li>
     </ul>
   </div>
-</nav>
+</nav> --}}
 <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -34,24 +35,20 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
+                        <th>Party</th>
                         <th>Showing</th>
                         <th>Room</th>
-                        <th>Seat</th>
+                        <th>Seat(s)</th>
                         <th>Actions</th>
                        
                     </tr>
-                </thead>
+                </tdead>
                 <tbody>
                     <tr>
-                        <td>John Doe</td>
-                        <td>Portland</td>
-                        <td>(171) 555-2222</td>
-                        <th>Tenet</th>
-                        <th>1 Room</th>
-                        <th>17K</th>
+                        <td>Marquette</td>
+                        <td>Tenet</td>
+                        <td>1 Room</td>
+                        <td>17K, 18K</td>
                         <td>
 							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
@@ -59,12 +56,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Peter Parker</td>
-                        <td>Corvallis</td>
-                        <td>(313) 555-5735</td>
-                        <th>Mortal Kombat</th>
-                        <th>2 Room</th>
-                        <th>15B</th>
+                        <td>McKenzie</td>
+                        <td>Mortal Kombat</td>
+                        <td>2 Room</td>
+                        <td>15B</td>
                         <td>
 							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
@@ -72,12 +67,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Fran Wilson</td>
-                        <td>Hillsoboro</td>
-                        <td>(503) 555-9931</td>
-                        <th>Godzilla vs Kong</th>
-                        <th>3 Room</th>
-                        <th>24A</th>
+                        <td>Turner</td>
+                        <td>Godzilla vs Kong</td>
+                        <td>3 Room</td>
+                        <td>24A</td>
                         <td>
 							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>

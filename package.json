@@ -1,10 +1,11 @@
 {
-  "name": "cs340_project",
+  "name": "projectcs",
   "version": "1.0.0",
   "description": "cs340 project",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Daniel Or, Ethan Mendelson",
   "license": "ISC",
@@ -14,5 +15,13 @@
     "express-handlebars": "^4.0.4",
     "forever": "^3.0.4",
     "mysql": "^2.18.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dor-web/CS340-Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dor-web/CS340-Project/issues"
+  },
+  "homepage": "https://github.com/dor-web/CS340-Project#readme"
 }

@@ -1,10 +1,11 @@
+var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars')
 var bodyParser = require('body-parser');
 
 var app = express();
 
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -15,16 +16,20 @@ app.use(express.json());
 PORT = 6558;                 // Set a port number at the top so it's easy to change in the future
 
 app.get('/', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-    res.render('home');
+    res.render('home', {active_home: true});
 });
 
 
 app.get('/showings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-    res.render('showings');
+    res.render('showings', {active_showings: true});
 });
 
 app.get('/order', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-  res.render('order');
+  res.render('order', {active_order: true});
+});
+
+app.get('/customer', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+  res.render('customer', {active_customer: true});
 });
 
 app.use(function(req,res){
