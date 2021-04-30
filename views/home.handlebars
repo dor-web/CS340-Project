@@ -24,13 +24,14 @@
 <h2> Overview </h2>
 <p>Our website will be handling ticket sales for a movie theater called MaxTheater in Portland, Oregon. This theater will have 8 theater rooms that will seats 50 to 225 seats. The theater will be able to show premium movies as well as old-time classics for movie lovers. It will also give options for large group members to reserve rooms for large parties for private viewing or want to watch sporting events on the large screen. The MaxTheater makes $25 million annually. Our database driven website will be recording ticket sales using Orders of showing and seats to Customers. 
 </p><br>
-<h2> Entity: Customers</h2>
-<p>records the details of Customers we do business with</p><br>
-<h2> Entity: Orders</h2>
-<p>create the order for the Customers. Acts as a medium between Customers </p><br>
-<h2> Entity: Rooms</h2>
-<p>Each “Rooms” entry is a particular theatre room with a finite set of seats to be sold.</p>
-<h2> Entity: Showings</h2>
-<p>handles the showing details for the Customers to lookup the desire shows</p><br>
-<h2> Entity: Seats</h2>
-<p>handles the seating details for the Customers </p>
+<p><strong>Note: All pages in this draft do not necessarily represent pages in the finished functioning product. These pages are meant to demonstrate the database entities.</strong></p>
+<h2>Showings</h2>
+<p>A record of all scheduled films. Contains the title, time, and cost, and room number.</p><br>
+<h2>Orders</h2>
+<p>Contains details of placed orders, including customer name, seat number, and room; all of these are references.</p><br>
+<h2>Customers</h2>
+<p>Contains the contact details and identifying information for customers. Will not be public access.</p><br>
+<h2>Rooms</h2>
+<p>Keeps track of theater capacity.</p>
+<h2>Seats</h2>
+<p>Details seat locations within the building.</p>

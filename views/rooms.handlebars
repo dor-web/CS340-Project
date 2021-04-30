@@ -1,0 +1,61 @@
+<h1>Theater Rooms</h1>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body>
+{{> navbar}}
+<style>
+    .container{
+        width: 450px;
+    }
+</style>
+<div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Room <b>Details</b></h2></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Room #</th>
+                        <th>Seats Total</th>
+                        <th>Seats Available</th>
+                      
+                    </tr>
+                </tdead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>100</td>
+                        <td>98</td>
+
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>50</td>
+                        <td>49</td>
+
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>50</td>
+                        <td>49</td>
+                    </tr>      
+                </tbody>
+            </table>
+        </div>
+    </div>     
+</body>

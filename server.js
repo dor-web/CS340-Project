@@ -32,6 +32,13 @@ app.get('/customer', function(req, res,next){    // This is the basic syntax for
   res.render('customer', {active_customer: true});
 });
 
+app.get('/rooms', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+  res.render('rooms', {active_rooms: true});
+});
+app.get('/seats', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+  res.render('seats', {active_seats: true});
+});
+
 app.use(function(req,res){
     res.type('text/plain');
     res.status(404);
