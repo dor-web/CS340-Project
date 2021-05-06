@@ -1,4 +1,4 @@
-<h1>Movies This Week</h1>
+<h1>Orders/Showings Intersection Table</h1>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<style>
+      .container{
+        width: 450px;
+    }
+</style>
 {{> navbar}}
 {{!-- <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -22,36 +26,26 @@
   <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Showing <b>Details</b></h2></div>
+                    <div class="col-sm-8"><h2>OrderShowings</h2></div>
                 </div>
             </div>
-            {{> searchBar}}
-    <table id='myTable' class="table table-bordered">
+    <table class="table table-bordered">
       <tr>
-          <th>Title</th>
-          <th>Time</th>
-          <th>Cost</th>
-          <th>Room</th>
+        <th>Order ID</th>
+        <th>Showing ID</th>
       </tr>
       <tr>
-        <td>Mortal Kombat</td>
-        <td>4:30 PM</td>
-        <td>$15</td>
         <td>1</td>
+        <td>2</td>
       </tr>
       <tr>
-        <td>Godzilla vs Kong</td>
-        <td>6:00 PM</td>
-        <td>$15</td>
-        <td>1</td>
-      </tr>
-
-      <tr>
-        <td>Tenet</td>
-        <td>10:00 AM</td>
-        <td>$10</td>
+        <td>2</td>
         <td>3</td>
-        </tr>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>1</td>
+      </tr>
     </table>
   </div>
 </div>
