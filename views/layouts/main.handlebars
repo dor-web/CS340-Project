@@ -12,16 +12,15 @@
         })
     </script>
 <script>
-        document.onclick = function (e) {   //when the document body is clicked
+        document.onclick = function (e) {   
             if (window.event) {
-                e = event.srcElement;           //assign the element clicked to e (IE 6-8)
+                e = event.srcElement;           
             }
             else {
-                e = e.target;                   //assign the element clicked to e
+                e = e.target;                   
             }
 
             if (e.className && e.parentNode.className == "delete") {
-                //if the element has a class name, and that is 'someclass' then...
                 e.parentNode.parentNode.parentNode.remove();
             } 
         }
