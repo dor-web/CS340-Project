@@ -9,17 +9,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script src="jquery-3.5.1.min.js"></script>
-  <script>
-    $('#myModal').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus')
-    })
-</script>
-<style>
-    .modal-body{
-        display: block;
-        overflow: auto;
-    }
-</style>
+
+
 </head>
 <body>
 {{> navbar}}
@@ -63,7 +54,7 @@
                         <td>
 							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
                     <tr>

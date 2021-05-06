@@ -1,28 +1,37 @@
 <h1>Reserved Seats</h1>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
+
 <body>
-{{> navbar}}
-<style>
-    .container{
-        width: 450px;
-    }
-</style>
-<div class="container">
+    {{> navbar}}
+    <style>
+        .container {
+            width: 450px;
+        }
+    </style>
+    <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Seat <b>Details</b></h2></div>
+                    <div class="col-sm-8">
+                        <h2>Seat <b>Details</b></h2>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#seatsModal"><i class="fa fa-plus"></i> Add New</button>
+                    </div>
                 </div>
+
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -31,9 +40,9 @@
                         <th>Column</th>
                         <th>Room #</th>
                         <th>Order #</th>
-                      
+
                     </tr>
-                </tdead>
+                    </tdead>
                 <tbody>
                     <tr>
                         <td>17</td>
@@ -60,9 +69,56 @@
                         <td>A</td>
                         <td>3</td>
                         <td>3</td>
-                    </tr>      
+                    </tr>
                 </tbody>
             </table>
         </div>
-    </div>     
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="seatsModal" tabindex="-1" role="dialog" aria-labelledby="seatsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="seatsModalLabel"><strong>Register Seat</strong></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="seatRow">Row:</label>
+                        <input type="number" name="seatRow" id="seatRow" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="seatCol">Col</label>
+                        <input type="text" class="form-control" id="seatCol">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="seatRoom">Room:</label>
+                        <select class="form-control" id="exampleFormControlSelect1" id="seatRoom">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="seatOrder">Order</label>
+                        <input type="text" class="form-control" id="seatOrder" placeholder="NAN">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
 </body>

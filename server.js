@@ -28,6 +28,9 @@ app.get('/order', function(req, res,next){    // This is the basic syntax for wh
   res.render('order', {active_order: true});
 });
 
+app.get('/ordershowings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+  res.render('ordershowings', {active_os: true});
+});
 app.get('/customer', function(req, res,next){    // This is the basic syntax for what is called a 'route'
   res.render('customer', {active_customer: true});
 });
@@ -38,6 +41,8 @@ app.get('/rooms', function(req, res,next){    // This is the basic syntax for wh
 app.get('/seats', function(req, res,next){    // This is the basic syntax for what is called a 'route'
   res.render('seats', {active_seats: true});
 });
+
+
 
 app.use(function(req,res){
     res.type('text/plain');
