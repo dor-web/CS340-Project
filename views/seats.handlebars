@@ -27,10 +27,10 @@
                         <h2>Seat <b>Details</b></h2>
                     </div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#seatsModal"><i class="fa fa-plus"></i> Add New</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#seatsModal"><i
+                                class="fa fa-plus"></i> Add New</button>
                     </div>
-                {{> searchBar}}
+                    {{> searchBar}}
                 </div>
 
             </div>
@@ -41,6 +41,7 @@
                         <th>Column</th>
                         <th>Room #</th>
                         <th>Order #</th>
+                        <th>Actions</th>
 
                     </tr>
                     </tdead>
@@ -50,6 +51,13 @@
                         <td>K</td>
                         <td>1</td>
                         <td>1</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </td>
 
                     </tr>
                     <tr>
@@ -57,6 +65,13 @@
                         <td>K</td>
                         <td>1</td>
                         <td>1</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </td>
 
                     </tr>
                     <tr>
@@ -64,61 +79,76 @@
                         <td>B</td>
                         <td>2</td>
                         <td>2</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </td>
                     </tr>
                     <tr>
                         <td>24</td>
                         <td>A</td>
                         <td>3</td>
                         <td>3</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="seatsModal" tabindex="-1" role="dialog" aria-labelledby="seatsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="seatsModalLabel"><strong>Register Seat</strong></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+    <div class="modal fade" id="seatsModal" tabindex="-1" role="dialog" aria-labelledby="seatsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seatsModalLabel"><strong>Register Seat</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="seatRow">Row:</label>
-                        <input type="number" name="seatRow" id="seatRow" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="seatCol">Col</label>
-                        <input type="text" class="form-control" id="seatCol">
-                    </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="seatRoom">Room:</label>
-                        <select class="form-control" id="exampleFormControlSelect1" id="seatRoom">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="seatOrder">Order</label>
-                        <input type="text" class="form-control" id="seatOrder" placeholder="NAN">
-                    </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="seatRow">Row:</label>
+                                <input type="number" name="seatRow" id="seatRow" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="seatCol">Col</label>
+                                <input type="text" class="form-control" id="seatCol">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="seatRoom">Room:</label>
+                                <select class="form-control" id="exampleFormControlSelect1" id="seatRoom">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="seatOrder">Order</label>
+                                <input type="text" class="form-control" id="seatOrder" placeholder="NAN">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-        </div>
-    </div>
     </div>
 
 

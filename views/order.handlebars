@@ -1,5 +1,6 @@
 <h1>Current Orders</h1>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,13 +10,60 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script>
+        document.onclick = function (i) {
+            if (window.event) {
+                i = event.srcElement;
+            }
+            else {
+                i = i.target;
+            }
+            if (i.className && i.parentNode.className == "edit") {
+                if (i.innerHTML == '') {
+                    i.innerHTML = '';
+                    makeEdit(i);
+                }
+                else {
+                    console.log(i.innerHTML);
+                    i.innerHTML = '';
+                    saveEdits(i);
+                }
+            }
+        }
+        function makeEdit(targ) {
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            editElem.setAttribute("contenteditable", "true");
+            editElem.style.backgroundColor = "lightblue";
+            editElem.focus();
+        }
+        function saveEdits(targ) {
+            console.log(targ);
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            var userVersion = editElem.innerHTML;
+            localStorage.setItem(editElem.id, userVersion);
+            editElem.toggleAttribute("contenteditable");
+            editElem.style.backgroundColor = "white";
+        }
+        function loadEdits() {
+
+            var statuses = document.getElementsByClassName("status");
+            for (item of statuses) {
+                if (localStorage.getItem(item.id))
+                item.innerHTML = localStorage.getItem(item.id);
+        }
+            if (localStorage.userEdits != null)
+                document.getElementById("edit").innerHTML = localStorage.userEdits;
+        }
+    </script>
 </head>
 
-<body>
+<body onload="loadEdits()">
     {{> navbar}}
     <style>
         .container {
-            width: 450px;
+            width: 700px;
         }
     </style>
     <div class="container">
@@ -26,14 +74,14 @@
                         <h2>Order <b>Details</b></h2>
                     </div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#orderModal"><i class="fa fa-plus"></i> Add New</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal"><i
+                                class="fa fa-plus"></i> Add New</button>
                     </div>
-                {{> searchBar}}
+                    {{> searchBar}}
                 </div>
 
             </div>
-<table id='myTable' class="table table-bordered">
+            <table id='myTable' class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Party</th>
@@ -42,32 +90,38 @@
                         <th>Seat(s)</th>
                         <th>Order Status</th>
                         <th>Actions</th>
-                       
+
                     </tr>
-                </tdead>
+                    </tdead>
                 <tbody>
                     <tr>
                         <td>Marquette</td>
                         <td>Tenet</td>
                         <td>1 Room</td>
                         <td>17K, 18K</td>
-                        <td>Complete</td>
+                        <td class="status" contenteditable="false" id="sr1">Complete</td>
                         <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip" onclick="removeParent(this)"><i class="material-icons">&#xE872;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE872;</i></a>
                         </td>
+
                     </tr>
+
                     <tr>
                         <td>McKenzie</td>
                         <td>Mortal Kombat</td>
                         <td>2 Room</td>
                         <td>15B</td>
-                            <td>Complete</td>
+                        <td class="status" contenteditable="false" id="sr2">Complete</td>
                         <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
                     <tr>
@@ -75,53 +129,57 @@
                         <td>Godzilla vs Kong</td>
                         <td>3 Room</td>
                         <td>24A</td>
-                        <td>Fail</td>
+                        <td class="status" contenteditable="false" id="sr3">Fail</td>
                         <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                    class="material-icons">&#xE872;</i></a>
                         </td>
-                    </tr>      
+                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="orderModalLabel"><strong>Register Seat</strong></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel"><strong>Register Seat</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="orderParty">Party:</label>
-                        <input type="text" name="orderParty" id="orderParty" class="form-control">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="orderShowing">Showing:</label>
-                        <input type="text" class="form-control" id="orderShowing">
-                    </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="orderSeats">Seats:</label>
-                        <input type="text" name="orderSeats" id="orderSeats" class="form-control">
-                    </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="orderParty">Party:</label>
+                                <input type="text" name="orderParty" id="orderParty" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="orderShowing">Showing:</label>
+                                <input type="text" class="form-control" id="orderShowing">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="orderSeats">Seats:</label>
+                                <input type="text" name="orderSeats" id="orderSeats" class="form-control">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-        </div>
-    </div>
     </div>
 
 
