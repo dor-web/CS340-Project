@@ -1,11 +1,12 @@
 var path = require('path');
 var express = require('express');
+var mysql = require('./db-connector.js')
 var exphbs = require('express-handlebars')
 var bodyParser = require('body-parser');
 
 var app = express();
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({ defaultLayout: 'main', layoutsDir: path.join(__dirname, 'layouts') }));
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-PORT = 6558;                 // Set a port number at the top so it's easy to change in the future
+PORT = 6559;                 // Set a port number at the top so it's easy to change in the future
 
 app.get('/', function(req, res,next){    // This is the basic syntax for what is called a 'route'
     res.render('home', {active_home: true});
@@ -49,7 +50,7 @@ app.use(function(req,res){
     res.status(404);
     res.send('404 - Not Found');
   });
-  
+
   app.use(function(err, req, res, next){
     console.error(err.stack);
     res.type('plain/text');
