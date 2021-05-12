@@ -18,6 +18,12 @@ CREATE TABLE `Customers` (
     UNIQUE KEY (`CustomerID`)
 ) ENGINE=InnoDB;
 
+CREATE TABLE `OrderStatuses`(
+    `OrderStatusID` int auto_increment not NULL,
+    `name`          varchar(100) not NULL,
+    PRIMARY KEY (`OrderStatusID`)
+)ENGINE=InnoDB;
+
 CREATE TABLE `Orders` (
     `OrderID` int auto_increment not NULL,
     `CustomerID` int not NULL,
@@ -25,19 +31,8 @@ CREATE TABLE `Orders` (
     `orderDate` datetime not NULL,
     `seatsQuant` int not NULL,
     PRIMARY KEY (`OrderID`),
-    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`OrderStatusID`) REFERENCES `OrderStatuses` (`OrderStatusID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
-
-CREATE TABLE `OrderShowings` (
-    `ShowingID` int auto_increment not NULL,
-    `OrderID` int not NULL,
-    -- not sure how this should look please check if this is correct
-    PRIMARY KEY (`ShowingID`),
-    PRIMARY KEY (`OrderID`),
-    FOREIGN KEY (`ShowingID`) REFERENCES `Showings` (`ShowingID`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`),
+    FOREIGN KEY (`OrderStatusID`) REFERENCES `OrderStatuses` (`OrderStatusID`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Rooms` (
@@ -54,8 +49,16 @@ CREATE TABLE `Showings` (
     `RoomID`    int not NULL,
     `cost`      int not NULL,
     PRIMARY KEY (`ShowingID`),
-    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE CASCADE
 )ENGINE=InnoDB;
+
+CREATE TABLE `OrderShowings` (
+    `ShowingID` int auto_increment not NULL,
+    `OrderID` int not NULL,
+    PRIMARY KEY (`ShowingID`, `OrderID`),
+    FOREIGN KEY (`ShowingID`) REFERENCES `Showings` (`ShowingID`) ON DELETE CASCADE,
+    FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE `Seats`(
     `SeatsID` int auto_increment not NULL,
@@ -64,12 +67,6 @@ CREATE TABLE `Seats`(
     `RoomID`  int not NULL,
     `OrderID` int not NULL,
     PRIMARY KEY (`SeatsID`),
-    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON DELETE SET NULL ON UPDATE CASCADE
-)ENGINE=InnoDB;
-
-CREATE TABLE `OrderStatuses`(
-    `OrderStatusID` int auto_increment not NULL,
-    `name`          varchar(100) not NULL,
-    PRIMARY KEY (`OrderStatusID`)
+    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE CASCADE,
+    FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON DELETE CASCADE
 )ENGINE=InnoDB;
