@@ -10,16 +10,16 @@ DROP TABLE IF EXISTS `Seats`;
 DROP TABLE IF EXISTS `OrderStatuses`;
 
 CREATE TABLE `Customers` (
-    `CustomerID` int auto_increment not NULL,
+    `CustomerID` int, auto_increment not NULL,
     `lastName` varchar(40) not NULL,
     `email` varchar(100) not NULL,
     `address1` varchar(200),
-    PRIMARY KEY (`CustomerID`)
+    PRIMARY KEY (`CustomerID`),
     UNIQUE KEY (`CustomerID`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Orders` (
-    `OrderID` int auto_increment not NULL,
+    `OrderID` int, auto_increment not NULL,
     `CustomerID` int not NULL,
     `OrderStatusID` int not NULL,
     `orderDate` datetime not NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `Orders` (
 
 
 CREATE TABLE `OrderShowings` (
-    `ShowingID` int auto_increment not NULL,
+    `ShowingID` int auto_increment, not NULL,
     `OrderID` int not NULL,
     -- not sure how this should look please check if this is correct
     PRIMARY KEY (`ShowingID`),
@@ -48,7 +48,7 @@ CREATE TABLE `Rooms` (
 )ENGINE=InnoDB;
 
 CREATE TABLE `Showings` (
-    `ShowingID` int auto_increment, not NULL,
+    `ShowingID` int auto_increment not NULL,
     `title`     varchar(200) not NULL,
     `time`      int not NULL,
     `RoomID`    int not NULL,
@@ -69,7 +69,7 @@ CREATE TABLE `Seats`(
 )ENGINE=InnoDB;
 
 CREATE TABLE `OrderStatuses`(
-    `OrderStatusID` int auto_increment not NULL,
+    `OrderStatusID` int auto_increment, not NULL,
     `name`          varchar(100), not NULL
     PRIMARY KEY (`OrderStatusID`)
 )ENGINE=InnoDB;
