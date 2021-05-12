@@ -1,5 +1,6 @@
 var path = require('path');
 var express = require('express');
+var mysql = require('./db-connector.js')
 var exphbs = require('express-handlebars')
 var bodyParser = require('body-parser');
 
