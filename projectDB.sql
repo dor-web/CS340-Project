@@ -64,12 +64,12 @@ CREATE TABLE `Seats`(
     `RoomID`  int not NULL,
     `OrderID` int not NULL,
     PRIMARY KEY (`SeatsID`),
-    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON DELETE SET NULL ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE `OrderStatuses`(
     `OrderStatusID` int auto_increment not NULL,
-    `name`          varchar(100), not NULL
+    `name`          varchar(100) not NULL,
     PRIMARY KEY (`OrderStatusID`)
 )ENGINE=InnoDB;
