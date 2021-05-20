@@ -6,7 +6,7 @@ module.exports = function(){
     function getShowings(res, mysql, context, complete){
         mysql.pool.query(`
           SELECT title,time, cost, Showings.RoomID as room  FROM Showings
-          JOIN Rooms on Rooms.RoomID = Showings.RoomID
+          JOIN Rooms ON Rooms.RoomID = Showings.RoomID
             `, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));

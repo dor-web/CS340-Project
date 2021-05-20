@@ -34,18 +34,27 @@
         <th>Order ID</th>
         <th>Showing ID</th>
       </tr>
-      <tr>
-        <td>1</td>
-        <td>2</td>
+      <tbody>
+        {{#each os}}
+        <tr>
+          <td>{{showing}}</td>
+          <td>{{os}}</td>
+        </tr>
+      {{!-- <tr>
+          <td>1</td>
+          <td>2</td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>1</td>
-      </tr>
+        <tr>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>1</td>
+        </tr> --}}
+        {{/each}}
+      </tbody>
     </table>
+    
   </div>
 </div>
