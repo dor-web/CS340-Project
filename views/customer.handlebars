@@ -8,7 +8,58 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script>
+        document.onclick = function (i) {
+            if (window.event) {
+                i = event.srcElement;
+            }
+            else {
+                i = i.target;
+            }
+            if (i.className && i.parentNode.className == "delete") {
+                i.parentNode.parentNode.parentNode.remove();
+            }
+            if (i.className && i.parentNode.className == "edit") {
+                if (i.innerHTML == '') {
+                    i.innerHTML = '';
+                    makeEdit(i);
+                }
 
+
+                else {
+                    console.log(i.innerHTML);
+                    i.innerHTML = '';
+                    saveEdits(i);
+                }
+            }
+        }
+        function makeEdit(targ) {
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            editElem.setAttribute("contenteditable", "true");
+            editElem.style.backgroundColor = "lightblue";
+            editElem.focus();
+        }
+        function saveEdits(targ) {
+            console.log(targ);
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            var userVersion = editElem.innerHTML;
+            localStorage.setItem(editElem.id, userVersion);
+            editElem.toggleAttribute("contenteditable");
+            editElem.style.backgroundColor = "white";
+        }
+        function loadEdits() {
+
+            var statuses = document.getElementsByClassName("status");
+            for (item of statuses) {
+                if (localStorage.getItem(item.id))
+                    item.innerHTML = localStorage.getItem(item.id);
+            }
+            if (localStorage.userEdits != null)
+                document.getElementById("edit").innerHTML = localStorage.userEdits;
+        }
+    </script>
 </head>
 <body>
 
@@ -29,14 +80,26 @@
                     <tr>
                         <th>Last Name</th>
                         <th>Address</th>
-                        <th>Address 2</th>
+                        {{!-- <th>Address 2</th> --}}
                         <th>Email</th>
                         <th>Action</th>
                        
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each customers}}
                     <tr>
+                        <td>{{name}}</td>
+                        <td>{{address}}</td>
+                        <td>{{email}}</td>
+                        <td>
+							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    {{!-- <tr>
                         <td>Marquette</td>
                         <td>4575 Prospect Valley Road</td>
                         <td>Apt 1</td>
@@ -68,7 +131,7 @@
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                             <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                         </td>
-                    </tr>      
+                    </tr>       --}}
                 </tbody>
             </table>
         </div>

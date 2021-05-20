@@ -26,18 +26,22 @@ app.get('/', function(req, res,next){    // This is the basic syntax for what is
 });
 
 
-app.get('/showings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-    res.render('showings', {active_showings: true});
-});
+// app.get('/showings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+//     res.render('showings', {active_showings: true});
+// });
+app.use('/showings', require('./showings.js'));
 
 app.use('/order', require('./order.js'));
 
 app.get('/ordershowings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
   res.render('ordershowings', {active_os: true});
 });
-app.get('/customer', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-  res.render('customer', {active_customer: true});
-});
+
+// app.get('/customer', function(req, res,next){    // This is the basic syntax for what is called a 'route'
+//   res.render('customer', {active_customer: true});
+// });
+
+app.use('/customer', require('./customer.js'));
 
 app.get('/rooms', function(req, res,next){    // This is the basic syntax for what is called a 'route'
   res.render('rooms', {active_rooms: true});
