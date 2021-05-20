@@ -71,6 +71,10 @@
             width: 700px;
         }
     </style>
+    <!-- {{dbg}}
+  {{#each orders}}
+  <h1>{{name}}|{{title}}|{{room}}|{{os}}</h1>
+  {{/each}} -->
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -99,28 +103,13 @@
                     </tr>
                     </tdead>
                 <tbody>
+                  {{#each orders}}
                     <tr>
-                        <td>Marquette</td>
-                        <td>Tenet</td>
-                        <td>1 Room</td>
-                        <td>17K, 18K</td>
-                        <td class="status" contenteditable="false" id="sr1">Complete</td>
-                        <td>
-                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE872;</i></a>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td>McKenzie</td>
-                        <td>Mortal Kombat</td>
-                        <td>2 Room</td>
-                        <td>15B</td>
-                        <td class="status" contenteditable="false" id="sr2">Complete</td>
+                        <td>{{name}}</td>
+                        <td>{{title}}</td>
+                        <td>{{room}}</td>
+                        <td>todo</td>
+                        <td class="status" contenteditable="false" id="sr1">{{os}}</td>
                         <td>
                             <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i
@@ -129,20 +118,7 @@
                                     class="material-icons">&#xE872;</i></a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Turner</td>
-                        <td>Godzilla vs Kong</td>
-                        <td>3 Room</td>
-                        <td>24A</td>
-                        <td class="status" contenteditable="false" id="sr3">Fail</td>
-                        <td>
-                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
+                    {{/each}}
 
                 </tbody>
             </table>

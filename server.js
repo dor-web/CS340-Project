@@ -1,13 +1,18 @@
 var path = require('path');
 var express = require('express');
-var mysql = require('./db-connector.js')
+var mysql = require('./db-connector.js');
 var exphbs = require('express-handlebars')
 var bodyParser = require('body-parser');
 
-var app = express();
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main', layoutsDir: path.join(__dirname, 'layouts') }));
+var app = express();
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  layoutsDir: path.join(__dirname, 'layouts'),
+  helpers: require("./public/helpers.js")
+}));
 app.set('view engine', 'handlebars');
+app.set('mysql', mysql);
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -25,9 +30,7 @@ app.get('/showings', function(req, res,next){    // This is the basic syntax for
     res.render('showings', {active_showings: true});
 });
 
-app.get('/order', function(req, res,next){    // This is the basic syntax for what is called a 'route'
-  res.render('order', {active_order: true});
-});
+app.use('/order', require('./order.js'));
 
 app.get('/ordershowings', function(req, res,next){    // This is the basic syntax for what is called a 'route'
   res.render('ordershowings', {active_os: true});
