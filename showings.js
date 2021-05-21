@@ -27,5 +27,19 @@ module.exports = function(){
         }
     });
 
+    router.post('/', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Showings (title, time, roomID, cost) VALUES(?, ?, ?, ?)";
+        var inserts = [req.body.title,req.body.time,req.body.room,req.body.amount];
+        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.end();
+            }else{
+              res.redirect('/showings');}
+        });
+    });
+
     return router;
 }();
