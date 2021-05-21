@@ -21,7 +21,6 @@ module.exports = function(){
     }
     //Now we can grab the customer's name and stick it into context as well
 
-
     router.get('/', function(req, res){
         var context = {active_orders: true};
         var mysql = req.app.get('mysql');
@@ -29,6 +28,35 @@ module.exports = function(){
         function complete(){
                 res.render('order', context);
         }
+    });
+
+    router.post('/', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Orders (CustomerID, seatsQuant, orderDate) VALUES(?, ?, ?)";
+        var inserts = [1, 1, '2021-05-12 20:27:21'];
+        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.end();
+            }else{
+
+              var sql = "INSERT INTO OrderShowings (OrderID, ShowingID) VALUES(?,(SELECT ShowingID FROM Showings WHERE title=?))";
+              var inserts = [results.insertId, req.body.orderShowing];
+              sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+                  if(error){
+                      console.log(JSON.stringify(error))
+                      res.write(JSON.stringify(error));
+                      res.end();
+                  }else{
+
+                    
+
+                  }
+              });
+
+            }
+        });
     });
 
     return router;
