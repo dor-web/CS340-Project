@@ -30,13 +30,13 @@ app.use('/showings', require('./showings.js'));
 app.use('/order', require('./order.js'));
 app.use('/orders', require('./order.js'));
 
-//app.use('/ordershowings', require('./ordershowings.js'));
+app.use('/ordershowings', require('./ordershowings.js'));
 
-//app.use('/customer', require('./customer.js'));
+app.use('/customer', require('./customer.js'));
 
 app.use('/rooms', require('./rooms.js'));
 
-//app.use('/seats', require('./seats.js'));
+app.use('/seats', require('./seats.js'));
 
 
 
