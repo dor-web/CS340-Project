@@ -20,15 +20,34 @@ module.exports = function () {
         });
     }
 
-    //Now we can grab the customer's name and stick it into context as well
+    //get showings to populate order menu
+    function getShowings(res, mysql, context, complete) {
+        mysql.pool.query(`
+          SELECT title, time FROM Showings
+          `, function (error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.showings = results;
+            complete();
+        });
+    }
+
 
     router.get('/', function (req, res) {
+        var checks = 0;
         var context = {active_orders: true};
         var mysql = req.app.get('mysql');
         getOrders(res, mysql, context, complete);
+        getShowings(res, mysql, context, complete)
 
         function complete() {
-            res.render('order', context);
+            checks++
+            if (checks>=2){
+                res.render('order', context);
+            }
+
         }
     });
 

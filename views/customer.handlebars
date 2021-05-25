@@ -31,7 +31,7 @@
         }
 
         function makeEdit(targ) {
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            const editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
             console.log(editElem);
             editElem.setAttribute("contenteditable", "true");
             editElem.style.backgroundColor = "lightblue";
@@ -40,9 +40,9 @@
 
         function saveEdits(targ) {
             console.log(targ);
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            const editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
             console.log(editElem);
-            var userVersion = editElem.innerHTML;
+            const userVersion = editElem.innerHTML;
             localStorage.setItem(editElem.id, userVersion);
             editElem.toggleAttribute("contenteditable");
             editElem.style.backgroundColor = "white";
@@ -50,7 +50,7 @@
 
         function loadEdits() {
 
-            var statuses = document.getElementsByClassName("status");
+            const statuses = document.getElementsByClassName("status");
             for (item of statuses) {
                 if (localStorage.getItem(item.id))
                     item.innerHTML = localStorage.getItem(item.id);

@@ -1,6 +1,6 @@
 module.exports = function () {
-    var express = require('express');
-    var router = express.Router();
+    const express = require('express');
+    const router = express.Router();
 
     //Grab info from Orders table and stick it into context
     function getCustomers(res, mysql, context, complete) {
