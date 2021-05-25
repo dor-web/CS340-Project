@@ -80,20 +80,35 @@ module.exports = function () {
         var sql = "INSERT INTO Orders (CustomerID, seatsQuant, orderDate) VALUES(?, ?, ?)";
         var inserts = [1, 1, '2021-05-12 20:27:21'];
         sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+            const orderInsertID = results.insertId;
             if (error) {
                 console.log(JSON.stringify(error))
                 res.write(JSON.stringify(error));
                 res.end();
+
             } else {
 
                 var sql = "INSERT INTO OrderShowings (OrderID, ShowingID) VALUES(?,(SELECT ShowingID FROM Showings WHERE title=?))";
-                var inserts = [results.insertId, req.body.orderShowing];
+                var inserts = [orderInsertID, req.body.orderShowing];
                 sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
                     if (error) {
                         console.log(JSON.stringify(error))
                         res.write(JSON.stringify(error));
                         res.end();
                     } else {
+
+                        var sql = "INSERT INTO Seats (row, col, RoomID, OrderID) VALUES(?, ?, (SELECT RoomID FROM Showings WHERE title=?), ?)";
+                        var inserts = [req.body.orderRow, req.body.orderCol, req.body.orderShowing, orderInsertID];
+                        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+                            if (error) {
+                                console.log(JSON.stringify(error))
+                                res.write(JSON.stringify(error));
+                                res.end();
+                            } else {
+                                res.redirect('/order');
+
+                            }
+                        });
 
 
                     }
