@@ -5,7 +5,7 @@ module.exports = function () {
     //Grab info from Orders table and stick it into context
     function getOrders(res, mysql, context, complete) {
         mysql.pool.query(`
-          SELECT lastName as name, title, RoomID as room,  OrderStatuses.name as os FROM Orders
+          SELECT Orders.OrderID as id, lastName as name, title, RoomID as room,  OrderStatuses.name as os FROM Orders
           JOIN Customers ON Customers.CustomerID = Orders.CustomerID
           JOIN OrderShowings ON OrderShowings.OrderID = Orders.OrderID
           JOIN Showings ON Showings.ShowingID = OrderShowings.ShowingID
@@ -33,6 +33,20 @@ module.exports = function () {
             complete();
         });
     }
+    //get seats to populate order
+    function getSeats(res, mysql, context, complete) {
+        mysql.pool.query(`
+          SELECT OrderID as id, GROUP_CONCAT(row, col) as seats FROM Seats
+          GROUP BY OrderID;
+          `, function (error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.seats = results;
+            complete();
+        });
+    }
 
 
     router.get('/', function (req, res) {
@@ -40,11 +54,21 @@ module.exports = function () {
         var context = {active_orders: true};
         var mysql = req.app.get('mysql');
         getOrders(res, mysql, context, complete);
-        getShowings(res, mysql, context, complete)
+        getShowings(res, mysql, context, complete);
+        getSeats(res, mysql, context, complete);
 
         function complete() {
             checks++
-            if (checks>=2){
+            if (checks>=3){
+                for (const ordersKey in context.orders) {
+                    //----Combining the results from each query into one context.
+                    //console.log(context.orders[ordersKey].id);
+                    //console.log(context.seats.find(x=>x.id === context.orders[ordersKey].id).seats);
+                    context.orders[ordersKey].seats = context.seats.find(x=>x.id === context.orders[ordersKey].id).seats;
+                    //console.log(context.orders);
+                }
+
+
                 res.render('order', context);
             }
 
