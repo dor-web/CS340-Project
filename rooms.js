@@ -1,30 +1,47 @@
-module.exports = function(){
+module.exports = function () {
     var express = require('express');
     var router = express.Router();
 
     //Grab info from Orders table and stick it into context
-    function getRooms(res, mysql, context, complete){
+    function getRooms(res, mysql, context, complete) {
         mysql.pool.query(`
             SELECT RoomID as room, seatsTotal as st, seatsAvailable as sa FROM Rooms
-          `, function(error, results, fields){
-            if(error){
+          `, function (error, results, fields) {
+            if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.rooms  = results;
+            context.rooms = results;
             complete();
         });
     }
+
     //Now we can grab the customer's name and stick it into context as well
 
 
-    router.get('/', function(req, res){
+    router.get('/', function (req, res) {
         var context = {active_rooms: true};
         var mysql = req.app.get('mysql');
         getRooms(res, mysql, context, complete);
-        function complete(){
-                res.render('rooms', context);
+
+        function complete() {
+            res.render('rooms', context);
         }
+    });
+
+    router.post('/', function (req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Rooms (seatsTotal, seatsAvailable) VALUES(?,?)";
+        var inserts = [req.body.seats, req.body.seats];
+        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+            if (error) {
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.end();
+            } else {
+                res.redirect('/rooms');
+            }
+        });
     });
 
     return router;

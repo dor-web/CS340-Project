@@ -1,141 +1,141 @@
 <h1>Theater Rooms</h1>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  
-  <script>
-    document.onclick = function (i) {
-      if (window.event) {
-          i = event.srcElement;
-      }
-      else {
-          i = i.target;
-      }
-      if (i.className && i.parentNode.className == "delete") {
-          i.parentNode.parentNode.parentNode.remove();
-      }
-      if (i.className && i.parentNode.className == "edit") {
-          if (i.innerHTML == '') {
-              i.innerHTML = '';
-              makeEdit(i);
-          }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script>
+        document.onclick = function (i) {
+            if (window.event) {
+                i = event.srcElement;
+            } else {
+                i = i.target;
+            }
+            if (i.className && i.parentNode.className == "delete") {
+                i.parentNode.parentNode.parentNode.remove();
+            }
+            if (i.className && i.parentNode.className == "edit") {
+                if (i.innerHTML == '') {
+                    i.innerHTML = '';
+                    makeEdit(i);
+                } else {
+                    console.log(i.innerHTML);
+                    i.innerHTML = '';
+                    saveEdits(i);
+                }
+            }
+        }
 
-          else {
-              console.log(i.innerHTML);
-              i.innerHTML = '';
-              saveEdits(i);
-          }
-      }
-  } 
-      function makeEdit(targ) {
-          var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-          console.log(editElem);
-          editElem.setAttribute("contenteditable", "true");
-          editElem.style.backgroundColor = "lightblue";
-          editElem.focus();
-      }
-      function saveEdits(targ) {
-          console.log(targ);
-          var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-          console.log(editElem);
-          var userVersion = editElem.innerHTML;
-          localStorage.setItem(editElem.id, userVersion);
-          editElem.toggleAttribute("contenteditable");
-          editElem.style.backgroundColor = "white";
-      }
-      function loadEdits() {
+        function makeEdit(targ) {
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            editElem.setAttribute("contenteditable", "true");
+            editElem.style.backgroundColor = "lightblue";
+            editElem.focus();
+        }
 
-          var statuses = document.getElementsByClassName("status");
-          for (item of statuses) {
-              if (localStorage.getItem(item.id))
-                  item.innerHTML = localStorage.getItem(item.id);
-          }
-          if (localStorage.userEdits != null)
-              document.getElementById("edit").innerHTML = localStorage.userEdits;
-      }   
-  </script>
+        function saveEdits(targ) {
+            console.log(targ);
+            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
+            console.log(editElem);
+            var userVersion = editElem.innerHTML;
+            localStorage.setItem(editElem.id, userVersion);
+            editElem.toggleAttribute("contenteditable");
+            editElem.style.backgroundColor = "white";
+        }
+
+        function loadEdits() {
+
+            var statuses = document.getElementsByClassName("status");
+            for (item of statuses) {
+                if (localStorage.getItem(item.id))
+                    item.innerHTML = localStorage.getItem(item.id);
+            }
+            if (localStorage.userEdits != null)
+                document.getElementById("edit").innerHTML = localStorage.userEdits;
+        }
+    </script>
 </head>
 <body>
 {{> navbar}}
 <style>
-    .container{
+    .container {
         width: 450px;
     }
 </style>
 <div class="container">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-8"><h2>Room <b>Details</b></h2></div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
-                    </div>
-                {{> searchBar}}
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8"><h2>Room <b>Details</b></h2></div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
                 </div>
+                {{> searchBar}}
             </div>
-            <table id="myTable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Room #</th>
-                        <th>Seats Total</th>
-                        <th>Seats Available</th>
-                        <th>Action</th>
-                    </tr>
-                </tdead>
-                <tbody>
-                    {{#each rooms}}
-                    <tr>
-                        <td>{{room}}</td>
-                        <td>{{st}}</td>
-                        <td>{{sa}}</td>
-                        <td>
-                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    {{/each}}
-                    {{!-- <tr>
-                        <td>1</td>
-                        <td>100</td>
-                        <td>98</td>
-                        <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>50</td>
-                        <td>49</td>
-                        <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>50</td>
-                        <td>49</td>
-                        <td>
-							<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>       --}}
-                </tbody>
-            </table>
         </div>
-    </div>     
+        <table id="myTable" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Room #</th>
+                <th>Seats Total</th>
+                <th>Seats Available</th>
+                <th>Action</th>
+            </tr>
+            </tdead>
+            <tbody>
+            {{#each rooms}}
+                <tr>
+                    <td>{{room}}</td>
+                    <td>{{st}}</td>
+                    <td>{{sa}}</td>
+                    <td>
+                        <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                class="material-icons">&#xE872;</i></a>
+                    </td>
+                </tr>
+            {{/each}}
+            {{!-- <tr>
+                <td>1</td>
+                <td>100</td>
+                <td>98</td>
+                <td>
+                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                </td>
+
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>50</td>
+                <td>49</td>
+                <td>
+                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                </td>
+
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>50</td>
+                <td>49</td>
+                <td>
+                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                </td>
+            </tr>       --}}
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>

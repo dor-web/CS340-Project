@@ -6,26 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-{{!--     <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script> --}}
-<script>
-        document.onclick = function (e) {   
+    {{!--     <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        </script> --}}
+    <script>
+        document.onclick = function (e) {
             if (window.event) {
-                e = event.srcElement;           
-            }
-            else {
-                e = e.target;                   
+                e = event.srcElement;
+            } else {
+                e = e.target;
             }
 
             if (e.className && e.parentNode.className == "delete") {
                 e.parentNode.parentNode.parentNode.remove();
-            } 
+            }
 
         }
-</script>
+    </script>
     <style>
         .modal-body {
             display: block;
@@ -35,7 +34,7 @@
 </head>
 
 <body>
-    {{{body}}}
+{{{body}}}
 </body>
 
 </html>

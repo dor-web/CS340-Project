@@ -14,8 +14,7 @@
         document.onclick = function (i) {
             if (window.event) {
                 i = event.srcElement;
-            }
-            else {
+            } else {
                 i = i.target;
             }
             if (i.className && i.parentNode.className == "delete") {
@@ -25,16 +24,14 @@
                 if (i.innerHTML == '') {
                     i.innerHTML = '';
                     makeEdit(i);
-                }
-
-
-                else {
+                } else {
                     console.log(i.innerHTML);
                     i.innerHTML = '';
                     saveEdits(i);
                 }
             }
         }
+
         function makeEdit(targ) {
             var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
             console.log(editElem);
@@ -42,6 +39,7 @@
             editElem.style.backgroundColor = "lightblue";
             editElem.focus();
         }
+
         function saveEdits(targ) {
             console.log(targ);
             var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
@@ -51,6 +49,7 @@
             editElem.toggleAttribute("contenteditable");
             editElem.style.backgroundColor = "white";
         }
+
         function loadEdits() {
 
             var statuses = document.getElementsByClassName("status");
@@ -65,109 +64,110 @@
 </head>
 
 <body onload="loadEdits()">
-    {{> navbar}}
-    <style>
-        .container {
-            width: 700px;
-        }
-    </style>
-    <!-- {{dbg}}
-  {{#each orders}}
+{{> navbar}}
+<style>
+    .container {
+        width: 700px;
+    }
+</style>
+<!-- {{dbg}}
+    {{#each orders}}
   <h1>{{name}}|{{title}}|{{room}}|{{os}}</h1>
   {{/each}} -->
-    <div class="container">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-8">
-                        <h2>Order <b>Details</b></h2>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal"><i
-                                class="fa fa-plus"></i> Add New</button>
-                    </div>
-                    {{> searchBar}}
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h2>Order <b>Details</b></h2>
                 </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal"><i
+                            class="fa fa-plus"></i> Add New
+                    </button>
+                </div>
+                {{> searchBar}}
+            </div>
+
+        </div>
+        <table id='myTable' class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Party</th>
+                <th>Showing</th>
+                <th>Room</th>
+                <th>Seat(s)</th>
+                <th>Order Status</th>
+                <th>Actions</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {{#each orders}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{title}}</td>
+                    <td>{{room}}</td>
+                    <td>todo</td>
+                    <td class="status" contenteditable="false" id="sr1">{{os}}</td>
+                    <td>
+                        <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip"><i
+                                class="material-icons">&#xE254;</i></a>
+                        <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                class="material-icons">&#xE872;</i></a>
+                    </td>
+                </tr>
+            {{/each}}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel"><strong>New Order</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
             </div>
-            <table id='myTable' class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Party</th>
-                        <th>Showing</th>
-                        <th>Room</th>
-                        <th>Seat(s)</th>
-                        <th>Order Status</th>
-                        <th>Actions</th>
-
-                    </tr>
-                    </thead>
-                <tbody>
-                  {{#each orders}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{title}}</td>
-                        <td>{{room}}</td>
-                        <td>todo</td>
-                        <td class="status" contenteditable="false" id="sr1">{{os}}</td>
-                        <td>
-                            <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE872;</i></a>
-                        </td>
-                    </tr>
-                    {{/each}}
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalLabel"><strong>Register Seat</strong></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-
-                </div>
-                <form action='/orders' method="POST" role="form">
+            <form action='/orders' method="POST" role="form">
                 <div class="modal-body">
 
-                        <div class="form-row">
-                            <!-- <div class="form-group col-md-6">
-                                <label for="orderParty">Party:</label>
-                                <input type="text" name="orderParty" id="orderParty" class="form-control">
-                            </div> -->
-                            <div class="form-group col-md-6">
-                                <label for="orderShowing">Showing:</label>
-                                <input type="text" name="orderShowing" class="form-control" id="orderShowing">
-                            </div>
+                    <div class="form-row">
+                        <!-- <div class="form-group col-md-6">
+                            <label for="orderParty">Party:</label>
+                            <input type="text" name="orderParty" id="orderParty" class="form-control">
+                        </div> -->
+                        <div class="form-group col-md-6">
+                            <label for="orderShowing">Showing:</label>
+                            <input type="text" name="orderShowing" class="form-control" id="orderShowing">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="orderRow">Row:</label>
-                                <input type="text" name="orderRow" id="orderRow" class="form-control">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="orderCol">Col:</label>
-                                <input type="text" name="orderCol" id="orderCol" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="orderRow">Row:</label>
+                            <input type="text" name="orderRow" id="orderRow" class="form-control">
                         </div>
+                        <div class="form-group col-md-6">
+                            <label for="orderCol">Col:</label>
+                            <input type="text" name="orderCol" id="orderCol" class="form-control">
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 
 
 </body>
