@@ -5,7 +5,7 @@ module.exports = function () {
     //Grab info from Orders table and stick it into context
     function getShowings(res, mysql, context, complete) {
         mysql.pool.query(`
-          SELECT title,time, cost, Showings.RoomID as room  FROM Showings
+          SELECT ShowingID as id, title,time, cost, Showings.RoomID as room  FROM Showings
           JOIN Rooms ON Rooms.RoomID = Showings.RoomID
             `, function (error, results, fields) {
             if (error) {
@@ -41,6 +41,22 @@ module.exports = function () {
                 res.redirect('/showings');
             }
         });
+    });
+    router.delete('/:id', function(req, res){
+    console.log("Recieved delete for " + req.params.id)
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM Showings WHERE ShowingID = ?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
     });
 
     return router;
