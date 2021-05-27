@@ -76,7 +76,8 @@ module.exports = function () {
                     //----Combining the results from each query into one context.
                     //console.log(context.orders[ordersKey].id);
                     //console.log(context.seats.find(x=>x.id === context.orders[ordersKey].id).seats);
-                    context.orders[ordersKey].seats = context.seats.find(x=>x.id === context.orders[ordersKey].id).seats;
+                    var orderSeat = context.seats.find(x => x.id === context.orders[ordersKey].id);
+                    context.orders[ordersKey].seats = (orderSeat) ? orderSeat.seats : 'Canceled';
                     //console.log(context.orders);
                 }
 
