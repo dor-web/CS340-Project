@@ -35,8 +35,8 @@ CREATE TABLE `Orders` (
     `orderDate` datetime not NULL,
     `seatsQuant` int not NULL,
     PRIMARY KEY (`OrderID`),
-    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`),
-    FOREIGN KEY (`OrderStatusID`) REFERENCES `OrderStatuses` (`OrderStatusID`)
+    FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`) ON DELETE CASCADE,
+    FOREIGN KEY (`OrderStatusID`) REFERENCES `OrderStatuses` (`OrderStatusID`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 INSERT INTO `Orders` (`OrderID`, `CustomerID`, `OrderStatusID`, `orderDate`, `seatsQuant`) VALUES ('1', '1', '1', '2021-05-12 21:21:53.000000', '2'), ('2', '2', '1', '2021-05-12 21:21:53.000000', '1'), ('3', '3', '2', '2021-05-12 21:21:53.000000', '1');

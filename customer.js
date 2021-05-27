@@ -4,7 +4,7 @@ module.exports = function () {
 
     //Grab info from Orders table and stick it into context
     function getCustomers(res, mysql, context, complete) {
-        mysql.pool.query('SELECT lastName as name, email, address1 as address FROM Customers', function (error, results, fields) {
+        mysql.pool.query('SELECT CustomerID as id, lastName as name, email, address1 as address FROM Customers', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
                 res.end();
