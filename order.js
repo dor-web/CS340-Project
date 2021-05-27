@@ -33,6 +33,17 @@ module.exports = function () {
             complete();
         });
     }
+    //getCustomers to choose from.
+    function getCustomers(res, mysql, context, complete) {
+        mysql.pool.query('SELECT lastName, CustomerID FROM Customers', function (error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.customers = results;
+            complete();
+        });
+    }
     //get seats to populate order
     function getSeats(res, mysql, context, complete) {
         mysql.pool.query(`
@@ -56,10 +67,11 @@ module.exports = function () {
         getOrders(res, mysql, context, complete);
         getShowings(res, mysql, context, complete);
         getSeats(res, mysql, context, complete);
+        getCustomers(res, mysql, context, complete);
 
         function complete() {
             checks++
-            if (checks>=3){
+            if (checks>=4){
                 for (const ordersKey in context.orders) {
                     //----Combining the results from each query into one context.
                     //console.log(context.orders[ordersKey].id);
@@ -77,8 +89,8 @@ module.exports = function () {
 
     router.post('/', function (req, res) {
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO Orders (CustomerID, seatsQuant, orderDate) VALUES(?, ?, ?)";
-        var inserts = [1, 1, '2021-05-12 20:27:21'];
+        var sql = "INSERT INTO Orders (CustomerID, seatsQuant, orderDate) VALUES((SELECT CustomerID FROM Customers WHERE lastName = ?), ?, ?)";
+        var inserts = [req.body.orderParty, 1, '2021-05-12 20:27:21'];
         sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
             const orderInsertID = results.insertId;
             if (error) {
