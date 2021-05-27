@@ -5,7 +5,7 @@ module.exports = function () {
     //Grab info from Orders table and stick it into context
     function getSeats(res, mysql, context, complete) {
         mysql.pool.query(`
-          SELECT row, col, Seats.RoomID as room, Seats.OrderID as so FROM Seats
+          SELECT SeatsID as id, row, col, Seats.RoomID as room, Seats.OrderID as so FROM Seats
           JOIN Orders ON Orders.OrderID = Seats.OrderID
           JOIN Rooms ON Rooms.RoomID = Seats.RoomID
           `, function (error, results, fields) {
@@ -22,7 +22,7 @@ module.exports = function () {
 
 
     router.get('/', function (req, res) {
-        var context = {active_seats: true};
+        var context = {active_seat: true};
         var mysql = req.app.get('mysql');
         getSeats(res, mysql, context, complete);
 
@@ -30,21 +30,21 @@ module.exports = function () {
             res.render('seats', context);
         }
     });
-    // router.post('/', function (req, res) {
-    //     var mysql = req.app.get('mysql');
-    //     var sql = "INSERT INTO Seats (row, col, roomID, OrderID) VALUES(?, ?, ?, ?)";
-    //     var inserts = [req.body.row, req.body.col, req.body.room, req.body.order];
-    //     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-    //         if (error) {
-    //             console.log(JSON.stringify(error))
-    //             res.write(JSON.stringify(error));
-    //             res.end();
-    //         } else {
-    //             res.redirect('/seats');
-    //         }
-    //     });
-    // });
-    router.delete('/:room', function(req, res){
+    router.post('/', function (req, res) {
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Seats (row, col, roomID, OrderID) VALUES(?, ?, ?, ?)";
+        var inserts = [req.body.row, req.body.col, req.body.room, req.body.order];
+        sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+            if (error) {
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.end();
+            } else {
+                res.redirect('/seats');
+            }
+        });
+    });
+    router.delete('/:id', function(req, res){
         console.log("Recieved delete for " + req.params.id)
             var mysql = req.app.get('mysql');
             var sql = "DELETE FROM Showings WHERE ShowingID = ?";
