@@ -30,9 +30,10 @@ module.exports = function () {
             res.render('seats', context);
         }
     });
+
     router.post('/', function (req, res) {
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO Seats (row, col, roomID, OrderID) VALUES(?, ?, ?, ?)";
+        var sql = "INSERT INTO Seats (row, col, RoomID, OrderID) VALUES(?, ?, ?, ?)";
         var inserts = [req.body.row, req.body.col, req.body.room, req.body.order];
         sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
             if (error) {
@@ -44,10 +45,11 @@ module.exports = function () {
             }
         });
     });
+
     router.delete('/:id', function(req, res){
         console.log("Recieved delete for " + req.params.id)
             var mysql = req.app.get('mysql');
-            var sql = "DELETE FROM Showings WHERE ShowingID = ?";
+            var sql = "DELETE FROM Seats WHERE SeatsID = ?";
             var inserts = [req.params.id];
             mysql.pool.query(sql, inserts, function(error, results, fields){
                 if(error){
