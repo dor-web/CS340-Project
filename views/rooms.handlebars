@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <script>
+    {{!-- <script>
         document.onclick = function (i) {
             if (window.event) {
                 i = event.srcElement;
@@ -59,10 +59,11 @@
             if (localStorage.userEdits != null)
                 document.getElementById("edit").innerHTML = localStorage.userEdits;
         }
-    </script>
+    </script> --}}
 </head>
 <body>
 {{> navbar}}
+{{bar}}
 <style>
     .container {
         width: 450px;
@@ -92,7 +93,7 @@
             </thead>
             <tbody>
             {{#each rooms}}
-                <tr>
+                <tr room={{room}}>
                     <td>{{room}}</td>
                     <td>{{st}}</td>
                     <td>{{sa}}</td>
