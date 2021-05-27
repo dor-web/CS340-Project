@@ -9,57 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    {{!-- <script>
-        document.onclick = function (i) {
-            if (window.event) {
-                i = event.srcElement;
-            } else {
-                i = i.target;
-            }
-            if (i.className && i.parentNode.className == "delete") {
-                i.parentNode.parentNode.parentNode.remove();
-            }
-            if (i.className && i.parentNode.className == "edit") {
-                if (i.innerHTML == '') {
-                    i.innerHTML = '';
-                    makeEdit(i);
-                } else {
-                    console.log(i.innerHTML);
-                    i.innerHTML = '';
-                    saveEdits(i);
-                }
-            }
-        }
-
-        function makeEdit(targ) {
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            editElem.setAttribute("contenteditable", "true");
-            editElem.style.backgroundColor = "lightblue";
-            editElem.focus();
-        }
-
-        function saveEdits(targ) {
-            console.log(targ);
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            var userVersion = editElem.innerHTML;
-            localStorage.setItem(editElem.id, userVersion);
-            editElem.toggleAttribute("contenteditable");
-            editElem.style.backgroundColor = "white";
-        }
-
-        function loadEdits() {
-
-            var statuses = document.getElementsByClassName("status");
-            for (item of statuses) {
-                if (localStorage.getItem(item.id))
-                    item.innerHTML = localStorage.getItem(item.id);
-            }
-            if (localStorage.userEdits != null)
-                document.getElementById("edit").innerHTML = localStorage.userEdits;
-        }
-    </script> --}}
+ 
 </head>
 <body>
 {{> navbar}}
