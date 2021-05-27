@@ -44,7 +44,7 @@ module.exports = function () {
         });
     });
 
-    router.delete('/:room', function(req, res){
+    router.delete('/:id', function(req, res){
     console.log("Recieved delete for " + req.params.id)
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM Rooms WHERE RoomID = ?";
