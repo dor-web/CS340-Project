@@ -11,59 +11,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <script>
-        document.onclick = function (i) {
-            if (window.event) {
-                i = event.srcElement;
-            } else {
-                i = i.target;
-            }
-            if (i.className && i.parentNode.className == "delete") {
-                i.parentNode.parentNode.parentNode.remove();
-            }
-            if (i.className && i.parentNode.className == "edit") {
-                if (i.innerHTML == '') {
-                    i.innerHTML = '';
-                    makeEdit(i);
-                } else {
-                    console.log(i.innerHTML);
-                    i.innerHTML = '';
-                    saveEdits(i);
-                }
-            }
-        }
+    function makeEdit(i, id) {
+        console.log('edit for ' + id);
+        //Populate form with values from selected row.
 
-        function makeEdit(targ) {
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            editElem.setAttribute("contenteditable", "true");
-            editElem.style.backgroundColor = "lightblue";
-            editElem.focus();
+        //Get the row containing clicked editor
+         const myRow = i.closest('tr');
+        {{dbg}}
+        //Collect data
+        var updateData = {
+            name: $(myRow).find('.name').html(),
+            showing: $(myRow).find('.title').html(),
+            room: $(myRow).find('.room').html(),
+            seatRow: $(myRow).find('.seats').html()[0],
+            seatCol: $(myRow).find('.seats').html().slice(1)
         }
-
-        function saveEdits(targ) {
-            console.log(targ);
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            var userVersion = editElem.innerHTML;
-            localStorage.setItem(editElem.id, userVersion);
-            editElem.toggleAttribute("contenteditable");
-            editElem.style.backgroundColor = "white";
-        }
-
-        function loadEdits() {
-
-            var statuses = document.getElementsByClassName("status");
-            for (item of statuses) {
-                if (localStorage.getItem(item.id))
-                    item.innerHTML = localStorage.getItem(item.id);
-            }
-            if (localStorage.userEdits != null)
-                document.getElementById("edit").innerHTML = localStorage.userEdits;
-        }
+            $('#orderParty > option:contains(' + updateData.name + ')').attr("selected","selected");
+            $('#orderShowing > option:contains(updateData.showing)').attr("selected","selected");
+            $('#orderRow').attr('value', updateData.seatRow);
+            $('#orderCol').attr('value', updateData.seatCol);
+    }
     </script>
 </head>
 
-<body onload="loadEdits()">
+<body>
 {{> navbar}}
 <style>
     .container {
@@ -79,7 +50,7 @@
                     <h2>Order <b>Details</b></h2>
                 </div>
                 <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal"><i
+                    <button id ="modalButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i
                             class="fa fa-plus"></i> Add New
                     </button>
                 </div>
@@ -102,15 +73,17 @@
             <tbody>
             {{#each orders}}
                 <tr id="{{id}}">
-                    <td>{{name}}</td>
-                    <td>{{title}}</td>
-                    <td>{{room}}</td>
-                    <td>{{seats}}</td>
+                    <td class="name">{{name}}</td>
+                    <td class="title">{{title}}</td>
+                    <td class="room">{{room}}</td>
+                    <td class="seats">{{seats}}</td>
                     <td class="status" contenteditable="false" id="sr1">{{os}}</td>
                     <td>
                         <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Edit" data-toggle="tooltip"><i
-                                class="material-icons">&#xE254;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip">
+                            <i
+                                class="material-icons" data-toggle="modal" data-target="#addModal">&#xE254;</i></a>
+
                         <a class="delete" title="Delete" data-toggle="tooltip"><i
                                 class="material-icons">&#xE872;</i></a>
                     </td>
@@ -122,7 +95,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

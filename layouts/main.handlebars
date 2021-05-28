@@ -15,8 +15,8 @@
             } else {
                 i = i.target;
             }
+            const id = i.parentNode.parentNode.parentNode.id;
             if (i.className && i.parentNode.className == "delete") {
-                const id = i.parentNode.parentNode.parentNode.id;
                 console.log(id);
                 //i.parentNode.parentNode.parentNode.remove();
                 $.ajax({
@@ -28,33 +28,20 @@
                 })
             }
             if (i.className && i.parentNode.className == "edit") {
-                if (i.innerHTML == '') {
-                    i.innerHTML = '';
-                    makeEdit(i);
-                } else {
-                    console.log(i.innerHTML);
-                    i.innerHTML = '';
-                    saveEdits(i);
-                }
+                makeEdit(i, id);
+
             }
         }
 
-        function makeEdit(targ) {
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            editElem.setAttribute("contenteditable", "true");
-            editElem.style.backgroundColor = "lightblue";
-            editElem.focus();
-        }
-
         function saveEdits(targ) {
-            console.log(targ);
-            var editElem = targ.parentElement.parentElement.parentElement.getElementsByClassName("status")[0];
-            console.log(editElem);
-            var userVersion = editElem.innerHTML;
-            localStorage.setItem(editElem.id, userVersion);
-            editElem.toggleAttribute("contenteditable");
-            editElem.style.backgroundColor = "white";
+            console.log("editing " + id);
+            $.ajax({
+                url: path + '/' + id,
+                type: 'PUT',
+                success: function(result){
+                    window.location.reload(true);
+                }
+            })
         }
     </script>
     <style>
