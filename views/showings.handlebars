@@ -9,7 +9,57 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script>
+    function makeEdit(i, id) {
 
+        console.log('edit for ' + id);
+        //Populate form with values from selected row.
+
+        //Get the row containing clicked editor
+         const myRow = i.closest('tr');
+
+        //Collect data from the table on the page with the clicked ID
+        var updateData = {
+            title: $(myRow).find('.title').html(),
+            time: $(myRow).find('.time').html(),
+            cost: $(myRow).find('.cost').html(),
+            room: $(myRow).find('.room').html()
+        }
+        /* Cringe that finds the current values in the dropdown menus and selects them*/
+        $('#title').attr('value', updateData.title);
+        $('#time').attr('value', updateData.time);
+        $('#amount').attr('value', updateData.cost);
+        $('#room > option:contains(' + updateData.room + ')').attr("selected","selected");
+        $('#room > option:not(:contains(' + updateData.room + '))').removeAttr("selected");
+
+
+            /*  There are two buttons on the pop-up form, update and submit.
+            *   Update is hidden by default. Clicking the edit button hides submit, shows update. */
+            $("#submitbtn").css("display","none");
+            $("#updatebtn").css("display","");
+
+
+            /* Grabs the ID of the row to update, adds a paramater to the button with the ID to change*/
+            $("#updatebtn")[0].targID = id;
+            $("#updatebtn")[0].addEventListener("click", sendEdit);
+
+
+
+    }
+    function sendEdit(evt){
+        const id = evt.currentTarget.targID;
+        const path = window.location.pathname;
+        console.log("sendEdit " + id);
+        $.ajax({
+            url: path + '/' + id,
+            type: 'PUT',
+            data: $('#dataForm').serialize(),
+            success: function(result){
+                window.location.reload(true);
+            }
+        })
+    }
+    </script>
 </head>
 
 <body>
@@ -20,15 +70,7 @@
         width: 700px;
     }
 </style>
-{{!-- <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
-      <li class="active"><a href="/showings">Showings</a></li>
-      <li><a href="/order">Orders</a></li>
-    </ul>
-  </div>
-</nav> --}}
+
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
@@ -37,7 +79,7 @@
                     <h2>Showing <b>Details</b></h2>
                 </div>
                 <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal"><i
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i
                             class="fa fa-plus"></i> Add New
                     </button>
                 </div>
@@ -57,14 +99,17 @@
         <tbody>
         {{#each showings}}
             <tr id="{{id}}">
-                <td>{{title}}</td>
-                <td>{{time}}</td>
-                <td>{{cost}}</td>
-                <td>{{room}}</td>
+                <td class = 'title'>{{title}}</td>
+                <td class = 'time'>{{time}}</td>
+                <td class = 'cost'>{{cost}}</td>
+                <td class = 'room'>{{room}}</td>
                 <td>
-                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                    <a class="delete" title="Delete" data-toggle="tooltip"><i
-                            class="material-icons">&#xE872;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip">
+                            <i
+                                class="material-icons" data-toggle="modal" data-target="#addModal">&#xE254;</i></a>
+
+                        <a class="delete" title="Delete" data-toggle="tooltip"><i
+                                class="material-icons">&#xE872;</i></a>
                 </td>
             </tr>
         {{/each}}
@@ -73,7 +118,7 @@
 </div>
 
 <!--Modal-->
-<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -85,7 +130,7 @@
             </div>
 
             <div class="modal-body">
-                <form action="/showings" method="POST" role="form">
+                <form id="dataForm" action="/showings" method="POST" role="form">
                     {{!-- Time input --}}
                     <div class="form-row">
                         <div class="mb-3">
@@ -127,7 +172,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button id= "submitbtn" type="submit" class="btn btn-primary">Submit</button>
+                        <button id="updatebtn" type="button" class="btn btn-primary" style="display:none" >Update</button>
                     </div>                    
                 </form>
 
