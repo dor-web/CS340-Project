@@ -29,7 +29,9 @@
         }
         /* Cringe that finds the current values in the dropdown menus and selects them*/
         $('#orderParty > option:contains(' + updateData.name + ')').attr("selected","selected");
-        $('#orderShowing > option:contains(updateData.showing)').attr("selected","selected");
+        $('#orderParty > option:not(:contains(' + updateData.name + '))').removeAttr("selected");
+        $('#orderShowing > option:contains(' + updateData.showing + ')').attr("selected","selected");
+        $('#orderShowing > option:not(:contains(' + updateData.showing + '))').removeAttr("selected");
         $('#orderRow').attr('value', updateData.seatRow);
         $('#orderCol').attr('value', updateData.seatCol);
 
