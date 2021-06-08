@@ -64,8 +64,8 @@ module.exports = function () {
         console.log(req.body.title + '\n' + req.body.time + '\n' + req.body.room + '\n'+ req.body.amount );
         var mysql = req.app.get('mysql');
         //First update the Showing
-        var sql = "UPDATE Showings SET title = ?, time = ?, roomID = ?, cost = ? WHERE ShowingID = ?;";
-        var inserts = [req.body.title, req.body.time, req.body.room, req.body.amount];
+        var sql = "UPDATE Showings SET title=?, time=?, roomID=?, cost=? WHERE ShowingID=?";
+        var inserts = [req.body.title, req.body.time, req.body.room, req.body.amount, req.params.id];
         mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(error)
