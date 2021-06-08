@@ -132,6 +132,7 @@ module.exports = function () {
     });
 
     router.delete('/:id', function(req, res){
+        console.log("Recieved Delete for " + req.params.id);
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM Orders WHERE OrderID = ?";
         var inserts = [req.params.id];
@@ -149,19 +150,34 @@ module.exports = function () {
 
     router.put('/:id', function(req, res){
         console.log('Recieved update for ' + req.params.id);
+        console.log(req.body.orderShowing + '\n' + req.body.orderRow + '\n' + req.body.orderCol + '\n');
         var mysql = req.app.get('mysql');
-        var sql = "";
-        var inserts = [];
-/*        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        //First update the Showing
+        var sql = "UPDATE OrderShowings SET OrderShowings.ShowingID = (SELECT ShowingID FROM Showings WHERE Showings.title = ?) WHERE OrderID = ?;";
+        var inserts = [req.body.orderShowing, req.params.id];
+        mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(error)
                 res.write(JSON.stringify(error));
                 res.status(400);
                 res.end();
             }else{
-                res.status(202).end();
+                //Now the seats
+                var sql = "UPDATE Seats SET row=?, col=? WHERE Seats.OrderID = ?;";
+                var inserts = [req.body.orderRow.toUpperCase(), req.body.orderCol, req.params.id];
+                mysql.pool.query(sql, inserts, function(error, results, fields){
+                    if(error){
+                        console.log(error)
+                        res.write(JSON.stringify(error));
+                        res.status(400);
+                        res.end();
+                    }else{
+                        res.status(202).end();
+                    }
+                })
+                //-------------
             }
-        })*/
+        })
     })
 
     return router;

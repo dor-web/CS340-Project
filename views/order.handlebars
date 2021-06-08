@@ -12,13 +12,14 @@
 
     <script>
     function makeEdit(i, id) {
+
         console.log('edit for ' + id);
         //Populate form with values from selected row.
 
         //Get the row containing clicked editor
          const myRow = i.closest('tr');
-        {{dbg}}
-        //Collect data
+
+        //Collect data from the table on the page with the clicked ID
         var updateData = {
             name: $(myRow).find('.name').html(),
             showing: $(myRow).find('.title').html(),
@@ -26,10 +27,37 @@
             seatRow: $(myRow).find('.seats').html()[0],
             seatCol: $(myRow).find('.seats').html().slice(1)
         }
-            $('#orderParty > option:contains(' + updateData.name + ')').attr("selected","selected");
-            $('#orderShowing > option:contains(updateData.showing)').attr("selected","selected");
-            $('#orderRow').attr('value', updateData.seatRow);
-            $('#orderCol').attr('value', updateData.seatCol);
+        /* Cringe that finds the current values in the dropdown menus and selects them*/
+        $('#orderParty > option:contains(' + updateData.name + ')').attr("selected","selected");
+        $('#orderShowing > option:contains(updateData.showing)').attr("selected","selected");
+        $('#orderRow').attr('value', updateData.seatRow);
+        $('#orderCol').attr('value', updateData.seatCol);
+
+            /*  There are two buttons on the pop-up form, update and submit.
+            *   Update is hidden by default. Clicking the edit button hides submit, shows update. */
+            $("#submitbtn").css("display","none");
+            $("#updatebtn").css("display","");
+
+
+            /* Grabs the ID of the row to update, adds a paramater to the button with the ID to change*/
+            $("#updatebtn")[0].targID = id;
+            $("#updatebtn")[0].addEventListener("click", sendEdit);
+
+
+
+    }
+    function sendEdit(evt){
+        const id = evt.currentTarget.targID;
+        const path = window.location.pathname;
+        console.log("sendEdit " + id);
+        $.ajax({
+            url: path + '/' + id,
+            type: 'PUT',
+            data: $('#dataForm').serialize(),
+            success: function(result){
+                window.location.reload(true);
+            }
+        })
     }
     </script>
 </head>
@@ -106,7 +134,7 @@
                 </button>
 
             </div>
-            <form action='/orders' method="POST" role="form">
+            <form id="dataForm" action='/orders' method="POST" role="form">
                 <div class="modal-body">
 
                     <div class="form-row">
@@ -140,7 +168,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button id= "submitbtn" type="submit" class="btn btn-primary">Submit</button>
+                    <button id="updatebtn" type="button" class="btn btn-primary" style="display:none" >Update</button>
+
+
                 </div>
             </form>
         </div>
