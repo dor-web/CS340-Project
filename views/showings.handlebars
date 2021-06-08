@@ -27,7 +27,7 @@
         }
         /* Cringe that finds the current values in the dropdown menus and selects them*/
         $('#title').attr('value', updateData.title);
-        $('#time').attr('value', updateData.time);
+        $('#time').attr('value', new Date(updateData.time).toISOString().slice(0, 19).replace('T', ' '));
         $('#amount').attr('value', updateData.cost);
         $('#room > option:contains(' + updateData.room + ')').attr("selected","selected");
         $('#room > option:not(:contains(' + updateData.room + '))').removeAttr("selected");
