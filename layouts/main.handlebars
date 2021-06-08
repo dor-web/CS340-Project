@@ -11,8 +11,8 @@
         function initModal() {
             /*  There are two buttons on the pop-up form, update and submit.
 *   Update is hidden by default. Clicking the edit button hides submit, shows update. */
-            $("#submitbtn").css("display", "none");
-            $("#updatebtn").css("display", "");
+            $("#submitbtn").css("display", "");
+            $("#updatebtn").css("display", "none");
             $("#addModal").on("hidden.bs.modal", function () {
                 $("#submitbtn").css("display", "");
                 $("#updatebtn").css("display", "none");

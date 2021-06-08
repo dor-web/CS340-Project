@@ -3,13 +3,25 @@
 
 --Get all Customers' information to populate Customer dropdown.
 --[Administrative tool]
-SELECT lastName, email FROM Customers;
+SELECT CustomerID as id, lastName as name, email, address1 as address FROM Customers
 
---Select the Order information and reserved seats of a particular customer.
+--Populate Order Window.
 --[User action or Administrative tool]
-SELECT Seats.OrderID, Orders.orderDate, CONCAT(row, col) from Seats
-JOIN Orders ON Orders.OrderID = Seats.OrderID AND Orders.CustomerID = :customer_ID_of_interest;
---SELECT Orders.CustomerID, orderDate, OrderStatuses.name AS OrderStatusID FROM Orders INNER JOIN OrderStatuses ON Orders.OrderStatusID = OrderStatuses.OrderStatusID;
+SELECT Orders.OrderID as id, lastName as name, title, RoomID as room,  OrderStatuses.name as os FROM Orders
+JOIN Customers ON Customers.CustomerID = Orders.CustomerID
+JOIN OrderShowings ON OrderShowings.OrderID = Orders.OrderID
+JOIN Showings ON Showings.ShowingID = OrderShowings.ShowingID
+JOIN OrderStatuses ON OrderStatuses.OrderStatusID = Orders.OrderStatusID
+
+--Get seats for order.
+--[User action or Administrative tool]
+SELECT OrderID as id, GROUP_CONCAT(row, col) as seats FROM Seats
+GROUP BY OrderID;
+
+--Populate Seats Page
+--[User action or Administrative tool]
+SELECT SeatsID as id, row, col, Seats.RoomID as room, Seats.OrderID as so FROM Seats
+JOIN Orders ON Orders.OrderID = Seats.OrderID
 
 --------------------------------[/SELECTIONS]----------------------------------
 
@@ -27,6 +39,7 @@ INSERT INTO Customers (lastName,email,address1) VALUES (:newlastName, :newemail,
 INSERT INTO Orders (CustomerID, seatsQuant, orderDate) VALUES(:activeCustomerID, :seatQuantInput, :dateUponOrder);
 SELECT LAST_INSERT_ID() INTO @orderIDForSeat;
 INSERT INTO Seats (OrderID, col, row, RoomID) VALUES(@orderIDForSeat, :chosenCol, :chosenRow, :providedRoom);
+INSERT INTO OrderShowings (OrderID, ShowingID) VALUES(@orderIDForSeat,(SELECT ShowingID FROM Showings WHERE title=:orderShowing))
 --------------------------------[/INSERTIONS]----------------------------------
 
 ---------------------------------[DELETIONS]----------------------------------
@@ -38,7 +51,11 @@ DELETE FROM Customers WHERE CustomerID = :valued_customer_to_remove;
 DELETE FROM Orders WHERE OrderID = :order_selected_by_users_from_list;
 --Remove Showing
 --[Administrative tool]
-DELETE FROM Showings WHERE showingID = :showingID_to_be_removed
+DELETE FROM Showings WHERE showingID = :showingID_to_be_removed;
+
+--Remove Seat
+--[Administrative tool]
+DELETE FROM Seats WHERE SeatsID = :seatID;
 ---------------------------------[/DELETIONS]----------------------------------
 
 ---------------------------------[UPDATES]----------------------------------
@@ -46,12 +63,14 @@ DELETE FROM Showings WHERE showingID = :showingID_to_be_removed
 --[User action]
 UPDATE Customers SET lastName = :updatedlastName, email = :updatedemail, address1 = :updatedAddress
 WHERE CustomerID = :activeCustomerID;
---Update Order Status
---[Administrative tool]
-UPDATE Orders SET orderStatusID = :newOrderStatusID
-WHERE OrderID = :orderID_to_update;
+
 --Update Showing details
 --[Administrative tool]
 UPDATE Showings SET time = :newTime, title = :newTitle, cost = :newCost, RoomID = :newRoomID
 WHERE showingID = :showingID_to_update;
+
+--Update Order
+--[Administrative tool]
+UPDATE OrderShowings SET OrderShowings.ShowingID = (SELECT ShowingID FROM Showings WHERE Showings.title = :showingTitle) WHERE OrderID = :orderToUpdate;
+UPDATE Seats SET row=:newRow, col=:newCol WHERE Seats.OrderID = :orderID;
 --------------------------------[/UPDATES]----------------------------------

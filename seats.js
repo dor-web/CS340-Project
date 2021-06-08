@@ -7,7 +7,6 @@ module.exports = function () {
         mysql.pool.query(`
           SELECT SeatsID as id, row, col, Seats.RoomID as room, Seats.OrderID as so FROM Seats
           JOIN Orders ON Orders.OrderID = Seats.OrderID
-          JOIN Rooms ON Rooms.RoomID = Seats.RoomID
           `, function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));
