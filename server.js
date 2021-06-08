@@ -34,7 +34,7 @@ app.use('/ordershowings', require('./ordershowings.js'));
 
 app.use('/customer', require('./customer.js'));
 
-app.use('/rooms', require('./rooms.js'));
+//app.use('/rooms', require('./rooms.js'));
 
 app.use('/seats', require('./seats.js'));
 

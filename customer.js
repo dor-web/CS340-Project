@@ -58,5 +58,24 @@ module.exports = function () {
         })
     });
 
+    router.put('/:id', function(req, res){
+        console.log('Recieved update for ' + req.params.id);
+        console.log(req.body.customerName + '\n' + req.body.customerEmail + '\n' + req.body.customerAddr + '\n');
+        var mysql = req.app.get('mysql');
+        //First update the Showing
+        var sql = "UPDATE Customers Set lastName=?, email=?, address1=? WHERE CustomerID=?";
+        var inserts = [req.body.customerName, req.body.customerEmail, req.body.customerAddr, req.params.id];
+        mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
+
     return router;
 }();

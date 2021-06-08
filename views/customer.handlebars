@@ -9,6 +9,57 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script>
+        function makeEdit(i, id) {
+
+            console.log('edit for ' + id);
+            //Populate form with values from selected row.
+
+            //Get the row containing clicked editor
+            const myRow = i.closest('tr');
+
+            //Collect data from the table on the page with the clicked ID
+            var updateData = {
+                name: $(myRow).find('.name').html(),
+                email: $(myRow).find('.email').html(),
+                address: $(myRow).find('.address').html()
+            }
+            /* Cringe that finds the current values in the dropdown menus and selects them*/
+            $('#customerName').attr('value', updateData.name);
+            $('#customerEmail').attr('value', updateData.email);
+            $('#customerAddr').attr('value', updateData.address);
+
+            /*  There are two buttons on the pop-up form, update and submit.
+            *   Update is hidden by default. Clicking the edit button hides submit, shows update. */
+            $("#submitbtn").css("display", "none");
+            $("#updatebtn").css("display", "");
+
+
+            /* Grabs the ID of the row to update, adds a paramater to the button with the ID to change*/
+            $("#updatebtn")[0].targID = id;
+            $("#updatebtn")[0].addEventListener("click", sendEdit);
+
+
+        }
+
+        function sendEdit(evt) {
+            const id = evt.currentTarget.targID;
+            const path = window.location.pathname;
+            console.log("sendEdit " + id);
+            $.ajax({
+                url: path + '/' + id,
+                type: 'PUT',
+                data: $('#dataForm').serialize(),
+                success: function (result) {
+                    window.location.reload(true);
+                }
+            })
+        }
+
+
+    </script>
+
+
 </head>
 <body>
 
@@ -40,12 +91,14 @@
             <tbody>
             {{#each customers}}
                 <tr id="{{id}}">
-                    <td>{{name}}</td>
-                    <td>{{address}}</td>
-                    <td>{{email}}</td>
+                    <td class="name">{{name}}</td>
+                    <td class="address">{{address}}</td>
+                    <td class="email">{{email}}</td>
                     <td>
                         <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                        <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                        <a class="edit" title="Edit" data-toggle="tooltip">
+                            <i
+                                    class="material-icons" data-toggle="modal" data-target="#addModal">&#xE254;</i></a>
                         <a class="delete" title="Delete" data-toggle="tooltip"><i
                                 class="material-icons">&#xE872;</i></a>
                     </td>
@@ -56,7 +109,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel"
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -67,7 +120,7 @@
                 </button>
 
             </div>
-            <form action='/customer' method="POST" role="form">
+            <form id = "dataForm" action='/customer' method="POST" role="form">
                 <div class="modal-body">
 
                     <div class="form-row">
@@ -90,6 +143,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <button id="updatebtn" type="button" class="btn btn-primary" style="display:none" >Update</button>
                 </div>
             </form>
         </div>

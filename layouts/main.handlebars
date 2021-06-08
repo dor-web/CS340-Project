@@ -8,6 +8,17 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        function initModal() {
+            /*  There are two buttons on the pop-up form, update and submit.
+*   Update is hidden by default. Clicking the edit button hides submit, shows update. */
+            $("#submitbtn").css("display", "none");
+            $("#updatebtn").css("display", "");
+            $("#addModal").on("hidden.bs.modal", function () {
+                $("#submitbtn").css("display", "");
+                $("#updatebtn").css("display", "none");
+            });
+        }
+
         document.onclick = function (i) {
             const path = window.location.pathname;
             if (window.event) {
@@ -22,7 +33,7 @@
                 $.ajax({
                     url: path + '/' + id,
                     type: 'DELETE',
-                    success: function(result){
+                    success: function (result) {
                         window.location.reload(true);
                     }
                 })
@@ -33,16 +44,16 @@
             }
         }
 
-/*        function saveEdits(targ) {
-            console.log("editing " + id);
-            $.ajax({
-                url: path + '/' + id,
-                type: 'PUT',
-                success: function(result){
-                    window.location.reload(true);
-                }
-            })
-        }*/
+        /*        function saveEdits(targ) {
+                    console.log("editing " + id);
+                    $.ajax({
+                        url: path + '/' + id,
+                        type: 'PUT',
+                        success: function(result){
+                            window.location.reload(true);
+                        }
+                    })
+                }*/
     </script>
     <style>
         .modal-body {
@@ -52,7 +63,7 @@
     </style>
 </head>
 
-<body>
+<body onload="initModal()">
 {{{body}}}
 </body>
 
